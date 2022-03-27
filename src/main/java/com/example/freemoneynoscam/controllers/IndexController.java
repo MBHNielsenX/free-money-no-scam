@@ -15,6 +15,11 @@ public class IndexController {
         return "index";
     }
 
+    @GetMapping("/correctMail")
+    public String succesMail(){
+        return "mailSucceded";
+    }
+
     @PostMapping("/test")
     public String test(WebRequest dataFromForm){
         System.out.println(dataFromForm.getParameter("email"));
@@ -22,9 +27,10 @@ public class IndexController {
 
         if (ValidateEmailService.isEmailValid(email)) {
             JdbcNoScam.insertData(email);
+            return "redirect:/correctMail";
+        } else {
+            return "redirect:/";
         }
 
-
-        return "redirect:/";
     }
 }
